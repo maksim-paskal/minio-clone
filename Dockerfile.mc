@@ -10,4 +10,6 @@ RUN cd mc && rm -rf .git && tar -czf /mc.tar.gz .
 FROM alpine:latest
 COPY --from=0 /mc.tar.gz /mc.tar.gz
 COPY --from=0 /mc /usr/local/bin/mc
+# minio helm chart jobs call /usr/bin/mc (path of the upstream minio/mc image)
+RUN ln -s /usr/local/bin/mc /usr/bin/mc
 ENTRYPOINT ["/usr/local/bin/mc"]
